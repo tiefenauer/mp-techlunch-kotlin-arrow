@@ -2,13 +2,15 @@ package org.example
 
 import kotlin.math.ceil
 
+/**
+ * Naive approach implementing a function that will return null to indicate that something went wrong
+ */
 object NumberParserWithNullability {
+
     /**
      * Converts a string-representation of a number to an int.
      * Fractional values will always be rounded up.
      * Both '.' and ',' are accepted as separators for the fractional part
-     * @throws IllegalArgumentException if the string-representation of the int is not within the interval [Int.MIN_VALUE, Int.MAX_VALUE]
-     * @throws NumberFormatException if the string is not a valid string-representation of a number
      */
     fun toInt(string: String): Int? {
         val result = try {

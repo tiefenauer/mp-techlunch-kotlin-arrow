@@ -3,13 +3,15 @@ package org.example
 import arrow.core.flatMap
 import kotlin.math.ceil
 
+/**
+ * Kotlin-idiomatic approach implementing a function that will return an instance of Result<Int> to wrap the result (or the failure)
+ */
 object NumberParserWithResult {
+
     /**
      * Converts a string-representation of a number to an int.
      * Fractional values will always be rounded up.
      * Both '.' and ',' are accepted as separators for the fractional part
-     * @throws IllegalArgumentException if the string-representation of the int is not within the interval [Int.MIN_VALUE, Int.MAX_VALUE]
-     * @throws NumberFormatException if the string is not a valid string-representation of a number
      */
     fun toInt(string: String) = runCatching { string.toInt() }
         .recoverCatching {

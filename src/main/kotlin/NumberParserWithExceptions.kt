@@ -2,7 +2,11 @@ package org.example
 
 import kotlin.math.ceil
 
+/**
+ * Improved approach implementing a function that will throw an Exception to indicate that something went wrong
+ */
 object NumberParserWithExceptions {
+
     /**
      * Converts a string-representation of a number to an int.
      * Fractional values will always be rounded up.
