@@ -1,9 +1,9 @@
 package org.example
 
-import arrow.core.Either
-import arrow.core.flatMap
-import arrow.core.left
-import arrow.core.right
+import arrow.core.*
+import arrow.core.raise.catch
+import arrow.core.raise.either
+import arrow.core.raise.ensure
 import kotlin.math.ceil
 
 sealed class ParseError {
@@ -12,22 +12,19 @@ sealed class ParseError {
     data object ValueTooLow : ParseError()
 }
 
-fun toInt(string: String) = when (val intEither = Either.catch { string.toInt() }) {
-    is Either.Right -> intEither
-    else -> when (val doubleEither1 = Either.catch { string.toDouble() }) {
-        is Either.Right -> doubleEither1.toRoundedInt()
-        else -> when (val doubleEither2 = Either.catch { string.replace(',', '.').toDouble() }) {
-            is Either.Right -> doubleEither2.toRoundedInt()
-            else -> ParseError.NotANumber.left()
-        }
-    }
+fun toInt(string: String) = either {
+    attemptCatching { return@either string.toInt() }
+    attemptCatching { return@either string.toDouble().toRoundedInt().bind() }
+    attemptCatching { return@either string.replace(',', '.').toDouble().toRoundedInt().bind() }
+    raise(ParseError.NotANumber)
 }
 
-fun Either<Throwable, Double>.toRoundedInt() = flatMap {
-    when {
-        it > Int.MAX_VALUE -> ParseError.ValueTooHigh.left()
-        it < Int.MIN_VALUE -> ParseError.ValueTooLow.left()
-        else -> ceil(it).right()
-    }
+fun Double.toRoundedInt() = either {
+    val double = this@toRoundedInt
+    ensure(double > Int.MIN_VALUE) { ParseError.ValueTooLow }
+    ensure(double < Int.MAX_VALUE) { ParseError.ValueTooHigh }
+    ceil(double).toInt()
 }
-    .map { it.toInt() }
+
+inline fun attemptCatching(block: () -> Nothing): Throwable =
+    catch(block, ::identity)
