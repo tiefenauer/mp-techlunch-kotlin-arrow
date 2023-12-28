@@ -1,8 +1,9 @@
 plugins {
     kotlin("jvm") version "1.9.21"
+    id("com.google.devtools.ksp") version "1.8.21-1.0.11"
 }
 
-group = "org.example"
+group = "info.tiefenauer"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -10,14 +11,15 @@ repositories {
 }
 
 dependencies {
-    implementation("io.arrow-kt:arrow-core:1.2.0")
-    implementation("io.arrow-kt:arrow-fx-coroutines:1.2.0")
+    implementation(libs.arrow.core)
+    implementation(libs.arrow.optics)
+    implementation(libs.arrow.optics.ksp.plugin) // needed for Arrow's optics: https://arrow-kt.io/learn/quickstart/#additional-setup-for-plug-ins
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
+    testImplementation(libs.junit.api)
+    testImplementation(libs.junit.params)
+    testRuntimeOnly(libs.junit.engine)
 
-    testImplementation("org.assertj:assertj-core:3.24.2")
+    testImplementation(libs.assertj.core)
 }
 
 tasks.test {
