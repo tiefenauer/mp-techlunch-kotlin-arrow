@@ -15,16 +15,19 @@ sealed class ParseError {
 fun toInt(string: String) = when (val intEither = Either.catch { string.toInt() }) {
     is Either.Right -> intEither
     else -> when (val doubleEither1 = Either.catch { string.toDouble() }) {
-        is Either.Right -> doubleEither1.flatMap { it.checkAndRound() }.map { it.toInt() }
+        is Either.Right -> doubleEither1.toRoundedInt()
         else -> when (val doubleEither2 = Either.catch { string.replace(',', '.').toDouble() }) {
-            is Either.Right -> doubleEither2.flatMap { it.checkAndRound() }.map { it.toInt() }
+            is Either.Right -> doubleEither2.toRoundedInt()
             else -> ParseError.NotANumber.left()
         }
     }
 }
 
-fun Double.checkAndRound() = when {
-    this > Int.MAX_VALUE -> ParseError.ValueTooHigh.left()
-    this < Int.MIN_VALUE -> ParseError.ValueTooLow.left()
-    else -> ceil(this).right()
+fun Either<Throwable, Double>.toRoundedInt() = flatMap {
+    when {
+        it > Int.MAX_VALUE -> ParseError.ValueTooHigh.left()
+        it < Int.MIN_VALUE -> ParseError.ValueTooLow.left()
+        else -> ceil(it).right()
+    }
 }
+    .map { it.toInt() }
