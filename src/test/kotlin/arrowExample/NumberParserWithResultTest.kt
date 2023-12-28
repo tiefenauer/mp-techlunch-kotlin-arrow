@@ -1,5 +1,6 @@
+package arrowExample
+
 import org.assertj.core.api.Assertions.assertThat
-import org.example.NumberParserWithResult
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource

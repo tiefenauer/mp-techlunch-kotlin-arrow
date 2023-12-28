@@ -1,4 +1,4 @@
-package org.example
+package arrowExample
 
 import arrow.core.Either.Companion.catch
 import arrow.core.raise.either

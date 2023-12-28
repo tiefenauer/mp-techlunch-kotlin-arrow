@@ -1,4 +1,4 @@
-package org.example
+package arrowExample
 
 import arrow.core.flatMap
 import kotlin.math.ceil

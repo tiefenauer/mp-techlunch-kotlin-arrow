@@ -1,4 +1,4 @@
-package org.example
+package arrowExample
 
 import arrow.core.Either
 import arrow.core.left
@@ -50,7 +50,7 @@ object NumberParseMonad {
         return ParseError.NotANumber.left() // this is the ultimate fallback: the string did not contain one of the accepted formats
     }
 
-    fun Double.toRoundedInt() = either {
+    private fun Double.toRoundedInt() = either {
         val double = this@toRoundedInt
         ensure(double > Int.MIN_VALUE) { ParseError.ValueTooLow }
         ensure(double < Int.MAX_VALUE) { ParseError.ValueTooHigh }

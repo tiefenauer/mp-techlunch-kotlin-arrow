@@ -1,4 +1,4 @@
-package org.example
+package arrowExample
 
 import arrow.core.Either
 import arrow.core.flatMap
