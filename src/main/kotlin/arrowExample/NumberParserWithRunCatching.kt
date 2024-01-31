@@ -4,13 +4,13 @@ import kotlin.math.ceil
 
 object NumberParserWithRunCatching {
     /**
-     * Converts a string-representation of a number to an int.
+     * Converts a string-representation of a number to its reciprocal double value.
      * Fractional values will always be rounded up.
      * Both '.' and ',' are accepted as separators for the fractional part
      * @throws IllegalArgumentException if the string-representation of the int is not within the interval [Int.MIN_VALUE, Int.MAX_VALUE]
      * @throws NumberFormatException if the string is not a valid string-representation of a number
      */
-    fun toInt(string: String): Int {
+    fun toReciprocal(string: String): Int {
         val intResult = kotlin.runCatching { string.toInt() }
         if (intResult.isFailure) {
             var doubleResult = kotlin.runCatching { string.toDouble() }

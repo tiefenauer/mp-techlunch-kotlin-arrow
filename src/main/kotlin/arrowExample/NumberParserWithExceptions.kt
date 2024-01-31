@@ -8,14 +8,15 @@ import kotlin.math.ceil
 object NumberParserWithExceptions {
 
     /**
-     * Converts a string-representation of a number to an int.
+     * Converts a string-representation of a number to its reciprocal double value.
      * Fractional values will always be rounded up.
      * Both '.' and ',' are accepted as separators for the fractional part
-     * @throws IllegalArgumentException if the string-representation of the int is not within the interval [Int.MIN_VALUE, Int.MAX_VALUE]
+     * @throws IllegalArgumentException if the string-representation of the number is not within the interval [Int.MIN_VALUE, Int.MAX_VALUE]
+     * @throws IllegalArgumentException if the string-representation of the number is zero
      * @throws NumberFormatException if the string is not a valid string-representation of a number
      */
-    fun toInt(string: String) = try {
-        string.toInt()
+    fun toReciprocal(string: String) = try {
+        1 / string.toInt().toDouble()
     } catch (e: NumberFormatException) {
         val double = try {
             string.toDouble()
@@ -29,6 +30,6 @@ object NumberParserWithExceptions {
         if (roundedValue < Int.MIN_VALUE) {
             throw IllegalArgumentException("$string is invalid: string value cannot be less than ${Int.MIN_VALUE}")
         }
-        roundedValue.toInt()
+        1 / roundedValue
     }
 }

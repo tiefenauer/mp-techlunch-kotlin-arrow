@@ -8,11 +8,11 @@ import kotlin.math.ceil
 object NumberParserWithNullability {
 
     /**
-     * Converts a string-representation of a number to an int.
+     * Converts a string-representation of a number to its reciprocal double value.
      * Fractional values will always be rounded up.
      * Both '.' and ',' are accepted as separators for the fractional part
      */
-    fun toInt(string: String): Int? {
+    fun toReciprocal(string: String): Double? {
         val result = try {
             try {
                 string.toInt()
@@ -29,11 +29,14 @@ object NumberParserWithNullability {
                 if (roundedValue < Int.MIN_VALUE) {
                     return null
                 }
-                return roundedValue.toInt()
+                if (roundedValue == 0.0) {
+                    return null
+                }
+                roundedValue.toInt()
             }
         } catch (e: Exception) {
             return null
         }
-        return result
+        return 1 / result.toDouble()
     }
 }
