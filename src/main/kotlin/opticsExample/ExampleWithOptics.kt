@@ -30,6 +30,7 @@ object ExampleWithOptics {
         // the old fashioned way, which requires us to create/compose lenses programmatically
         var updatedPolicy = insurancePolicyInsurantAddressStreetNumberLens.modify(policy) { "43" }
         println("new street number: ${updatedPolicy.insurant.address.streetNumber}")
+
         // the better way, using generated lens code:
         updatedPolicy = InsurancePolicy.insurant.address.streetNumber.modify(policy) { "43" }
         println("new street number: ${updatedPolicy.insurant.address.streetNumber}")
